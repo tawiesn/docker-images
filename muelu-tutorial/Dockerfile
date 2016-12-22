@@ -44,7 +44,7 @@ RUN /opt/trilinos/download_trilinos.sh
 #RUN mv /opt/trilinos/trilinos-12.8.1-Source.tar.gz /opt/trilinos/trilinos.tar.gz
 
 ##extract trilinos source file
-RUN tar xvf /opt/trilinos/trilinos.tar.gz
+RUN tar xf /opt/trilinos/trilinos.tar.gz -C /opt/trilinos/
 RUN rm -f /opt/trilinos/trilinos.tar.gz
 RUN mv /opt/trilinos/trilinos-12.8.1-Source /opt/trilinos/trilinos
 RUN mkdir /opt/trilinos/trilinos-build
