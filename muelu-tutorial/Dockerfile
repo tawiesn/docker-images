@@ -41,7 +41,7 @@ RUN chmod 750 /opt/trilinos/download_trilinos.sh
 
 RUN /opt/trilinos/download_trilinos.sh
 #COPY trilinos-12.8.1-Source.tar.gz /home/$username
-RUN mv /opt/trilinos/trilinos-12.8.1-Source.tar.gz /opt/trilinos/trilinos.tar.gz
+#RUN mv /opt/trilinos/trilinos-12.8.1-Source.tar.gz /opt/trilinos/trilinos.tar.gz
 
 ##extract trilinos source file
 RUN tar xvf /opt/trilinos/trilinos.tar.gz
