@@ -12,79 +12,79 @@ ARG username=tutorial
 #########################
 
 # Install LXDE, VNC server
-RUN yum update; \
-    yum -y install htop xterm nano; \
-    yum -y install openbox; \
-    yum -y install tightvnc-server; \
-    yum clean all
+RUN yum update && \
+    yum -y install htop xterm nano openbox tightvnc-server \
+	doxygen gnuplot gedit xfce4-terminal && \
+    yum clean all;
 
 #########################    
     
-RUN yum update; \
-    yum -y install doxygen; \
-    yum -y install gnuplot; \
-    yum -y install gedit; \
-    yum -y install xfce4-terminal; \
-    yum clean all;
+#RUN yum update; \
+#    yum -y install doxygen; \
+#    yum -y install gnuplot; \
+#    yum -y install gedit; \
+#    yum -y install xfce4-terminal; \
+#    yum clean all;
 
 # create user (but run the commands as root)
-RUN adduser $username
-WORKDIR /home/$username
+#RUN adduser $username
+#WORKDIR /home/$username
 
 # copy files to image
-COPY download_trilinos.sh /home/$username/
-COPY install_trilinos.sh /home/$username/
-COPY do-configure /home/$username/
+COPY download_trilinos.sh /opt/trilinos
+COPY install_trilinos.sh /opt/trilinos
+COPY do-configure /opt/trilinos 
 
 # copy or download trilinos source files
-WORKDIR /home/$username
-RUN chmod 750 download_trilinos.sh
-RUN ./download_trilinos.sh
+#WORKDIR /home/$username
+RUN chmod 750 /opt/trilinos/download_trilinos.sh
+
+RUN /opt/trilinos/download_trilinos.sh
 #COPY trilinos-12.8.1-Source.tar.gz /home/$username
 RUN mv trilinos-12.8.1-Source.tar.gz trilinos.tar.gz
 
 ##extract trilinos source file
-RUN tar xvf trilinos.tar.gz
-RUN rm -f trilinos.tar.gz
-RUN mv trilinos-12.8.1-Source trilinos
-RUN mkdir trilinos-build
+RUN tar xvf /opt/trilinos/trilinos.tar.gz
+RUN rm -f /opt/trilinos/trilinos.tar.gz
+RUN mv /opt/trilinos/trilinos-12.8.1-Source /opt/trilinos/trilinos
+RUN mkdir /opt/trilinos/trilinos-build
 
 # switch to new user
-RUN chown -R $username: /home/$username
-RUN echo 'module load mpi/openmpi-x86_64' >> /home/$username/.bash_profile
+#RUN chown -R $username: /home/$username
+#RUN echo 'module load mpi/openmpi-x86_64' >> /home/$username/.bash_profile
 
 #######################
 
 # Set user for VNC server (USER is only for build)
-ENV USER $username
+#ENV USER $username
 
 # Copy xstartup file
-COPY Xclients /home/$username/.Xclients 
-COPY password.txt /home/$username
-RUN chown -R $username: /home/$username
+#COPY Xclients /home/$username/.Xclients 
+#COPY password.txt /home/$username
+#RUN chown -R $username: /home/$username
 
 # Copy VNC script that handles restarts
-COPY vnc.sh /opt/
-RUN chown $username: /opt/vnc.sh
+#COPY vnc.sh /opt/
+#RUN chown $username: /opt/vnc.sh
 
 # Expose VNC port
-EXPOSE 5901
+#EXPOSE 5901
 
 ########################
 # switch to user
 ########################
-USER $username
+#USER $username
 
 # Set default password
-RUN cat password.txt password.txt | vncpasswd && \
-  rm password.txt
+#RUN cat password.txt password.txt | vncpasswd && \
+#  rm password.txt
 
-CMD ["/opt/vnc.sh"]
+#CMD ["/opt/vnc.sh"]
 
 ########################
 ## compile trilinos
 # must be run as user!
-RUN ./install_trilinos.sh
+RUN /opt/trilinos/install_trilinos.sh
 
 ########################
 
