@@ -31,9 +31,9 @@ RUN yum -y update && \
 #WORKDIR /home/$username
 
 # copy files to image
-COPY download_trilinos.sh /opt/trilinos
-COPY install_trilinos.sh /opt/trilinos
-COPY do-configure /opt/trilinos 
+COPY download_trilinos.sh /opt/trilinos/
+COPY install_trilinos.sh /opt/trilinos/
+COPY do-configure /opt/trilinos/
 
 # copy or download trilinos source files
 #WORKDIR /home/$username
