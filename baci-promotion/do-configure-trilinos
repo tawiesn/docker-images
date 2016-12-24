@@ -1,0 +1,65 @@
+#!/bin/sh
+
+
+ADCO_BASEDIR=`cd ~ ; pwd`
+
+TRILINOS_HOME=$ADCO_BASEDIR/TPL/trilinos-source
+EXTRA_ARGS=$@
+
+cmake \
+    -D CMAKE_BUILD_TYPE:STRING=DEBUG \
+    -D CMAKE_INSTALL_PREFIX:STRING="$ADCO_BASEDIR/TPL/trilinos" \
+    -D CMAKE_VERBOSE_MAKEFILE:BOOL=OFF \
+    -D CMAKE_COLOR_MAKEFILE:BOOL=ON \
+    -D BUILD_SHARED_LIBS:BOOL=OFF \
+    -D DART_TESTING_TIMEOUT:STRING=600 \
+    -D CMAKE_CXX_FLAGS:STRING="-Wno-deprecated -Wno-deprecated-declarations -fPIC" \
+    -D CMAKE_C_FLAGS:STRING="-Wno-deprecated -Wno-deprecated-declarations -fPIC" \
+    -D CMAKE_Fortran_FLAGS:STRING="-fPIC" \
+    -D Trilinos_ENABLE_INSTALL_CMAKE_CONFIG_FILES:BOOL=ON \
+    -D Trilinos_VERBOSE_CONFIGURE:BOOL=OFF \
+    -D Trilinos_ENABLE_SHADOW_WARNINGS:BOOL=ON \
+    -D Trilinos_ENABLE_ALL_OPTIONAL_PACKAGES:BOOL=ON \
+    -D Trilinos_ENABLE_EXPLICIT_INSTANTIATION:BOOL=ON \
+    -D Trilinos_ENABLE_SECONDARY_STABLE_CODE:BOOL=ON \
+    -D Trilinos_ENABLE_Amesos:BOOL=ON \
+    -D Trilinos_ENABLE_Amesos2:BOOL=OFF \
+    -D Trilinos_ENABLE_AztecOO:BOOL=ON \
+    -D Trilinos_ENABLE_Belos:BOOL=ON \
+    -D Trilinos_ENABLE_Epetra:BOOL=ON \
+    -D Trilinos_ENABLE_EpetraExt:BOOL=ON \
+    -D Trilinos_ENABLE_Ifpack:BOOL=ON \
+    -D Trilinos_ENABLE_Isorropia:BOOL=ON \
+    -D Trilinos_ENABLE_ML:BOOL=ON \
+    -D Trilinos_ENABLE_ML_MLAPI:BOOL=ON \
+    -D Trilinos_ENABLE_ML_METIS:BOOL=ON \
+    -D Trilinos_ENABLE_ML_PARMETIS3X:BOOL=ON \
+    -D Trilinos_ENABLE_MueLu:BOOL=ON \
+    -D Trilinos_ENABLE_Xpetra:BOOL=ON \
+    -D Trilinos_ENABLE_NOX:BOOL=ON \
+    -D Trilinos_ENABLE_Shards:BOOL=ON \
+    -D Trilinos_ENABLE_Intrepid:BOOL=ON \
+    -D Trilinos_ENABLE_Teuchos:BOOL=ON \
+    -D Trilinos_ENABLE_Zoltan:BOOL=ON \
+    -D Trilinos_ENABLE_Zoltan2:BOOL=OFF \
+    -D Xpetra_ENABLE_Experimental:BOOL=ON \
+    -D MueLu_ENABLE_Experimental:BOOL=ON \
+    -D TPL_ENABLE_Boost:BOOL=OFF \
+    -D TPL_ENABLE_HDF5:BOOL=OFF \
+    -D TPL_ENABLE_MPI:BOOL=ON \
+    -D TPL_ENABLE_Netcdf:BOOL=OFF \
+    -D TPL_ENABLE_ParMETIS:BOOL=ON \
+    -D TPL_ENABLE_Pthread:BOOL=ON \
+    -D TPL_ENABLE_SuperLUDist:BOOL=OFF \
+    -D TPL_ENABLE_UMFPACK:BOOL=OFF \
+    -D CMAKE_VERBOSE_MAKEFILE:BOOL=OFF \
+    -D EpetraExt_ENABLE_HDF5:BOOL=OFF \
+    -D ParMETIS_INCLUDE_DIRS:PATH="$ADCO_BASEDIR/TPL/ParMetis-3.1.1" \
+    -D ParMETIS_LIBRARY_DIRS:PATH="$ADCO_BASEDIR/TPL/ParMetis-3.1.1" \
+    -D UMFPACK_INCLUDE_DIRS:FILEPATH="$ADCO_BASEDIR/TPL/SuiteSparse/include" \
+    -D UMFPACK_LIBRARY_DIRS:FILEPATH="$ADCO_BASEDIR/TPL/SuiteSparse/lib" \
+    -D SuperLUDist_INCLUDE_DIRS:PATH="$ADCO_BASEDIR/TPL/SuperLU_DIST_2.5/SRC" \
+    -D SuperLUDist_LIBRARY_DIRS:PATH="$ADCO_BASEDIR/TPL/SuperLU_DIST_2.5/lib" \
+    -D SuperLUDist_LIBRARY_NAMES:STRING="superlu_dist_2.5" \
+    $EXTRA_ARGS \
+    ${TRILINOS_HOME}
