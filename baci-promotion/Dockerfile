@@ -45,8 +45,7 @@ RUN wget http://www.open-mpi.org/software/ompi/v1.8/downloads/openmpi-1.8.4.tar.
 
 RUN wget http://glaros.dtc.umn.edu/gkhome/fetch/sw/parmetis/OLD/ParMetis-3.1.1.tar.gz
 
-#wget http://trilinos.org/oldsite/download/files/trilinos-11.12.1-Source.tar.gz
-RUN wget http://www.adco-engineering.de/sgr/trilinos-11.12.1-Source.tar.gz
+RUN wget http://trilinos.org/oldsite/download/files/trilinos-11.12.1-Source.tar.gz
 
 RUN wget http://faculty.cse.tamu.edu/davis/SuiteSparse/SuiteSparse-3.3.0.tar.gz
 
