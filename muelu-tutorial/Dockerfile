@@ -88,7 +88,7 @@ RUN mkdir /opt/trilinos/trilinos-build
 WORKDIR /opt/trilinos
 
 RUN /opt/trilinos/do-configure
-RUN cd /opt/trilinos/trilinos-build && make -j4:
+RUN cd /opt/trilinos/trilinos-build && make 
 
 ########################
 
