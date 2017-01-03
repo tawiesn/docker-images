@@ -1,17 +1,17 @@
 #!/bin/bash -i
 
 # create folder structure and move files to correct place
-TRILINOS_SRCDIR=~/trilinos
-TRILINOS_BUILDDIR=~/trilinos-build
+TRILINOS_SRCDIR=/opt/trilinos
+TRILINOS_BUILDDIR=/opt/trilinos-build
 
 TPL_BASEDIR=/opt/tpls
 
 ## load MPI module
-echo "Load MPI module"
-module load mpi/openmpi-x86_64
+#echo "Load MPI module"
+#module load mpi/openmpi-x86_64
 
 ## run configuration
-cd ~
+#cd ~
 ./do-configure
 
 ## build trilinos

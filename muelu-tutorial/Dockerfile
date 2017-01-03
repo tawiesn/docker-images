@@ -31,15 +31,17 @@ RUN yum -y update && \
 #WORKDIR /home/$username
 
 # copy files to image
-COPY download_trilinos.sh /opt/trilinos/
+#COPY download_trilinos.sh /opt/trilinos/
 COPY install_trilinos.sh /opt/trilinos/
 COPY do-configure /opt/trilinos/
 
 # copy or download trilinos source files
-#WORKDIR /home/$username
-RUN chmod 750 /opt/trilinos/download_trilinos.sh
 
-RUN /opt/trilinos/download_trilinos.sh
+RUN wget -nv https://trilinos.org/oldsite/download/files/trilinos-12.8.1-Source.tar.gz -O /opt/trilinos/trilinos.tar.gz
+
+#WORKDIR /home/$username
+#RUN chmod 750 /opt/trilinos/download_trilinos.sh
+#RUN /opt/trilinos/download_trilinos.sh
 #COPY trilinos-12.8.1-Source.tar.gz /home/$username
 #RUN mv /opt/trilinos/trilinos-12.8.1-Source.tar.gz /opt/trilinos/trilinos.tar.gz
 
@@ -49,9 +51,6 @@ RUN rm -f /opt/trilinos/trilinos.tar.gz
 RUN mv /opt/trilinos/trilinos-12.8.1-Source /opt/trilinos/trilinos
 RUN mkdir /opt/trilinos/trilinos-build
 
-# switch to new user
-#RUN chown -R $username: /home/$username
-#RUN echo 'module load mpi/openmpi-x86_64' >> /home/$username/.bash_profile
 
 #######################
 
