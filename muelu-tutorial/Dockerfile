@@ -85,6 +85,8 @@ RUN mkdir /opt/trilinos/trilinos-build
 # must be run as user!
 #RUN /opt/trilinos/install_trilinos.sh
 
+WORKDIR /opt/trilinos
+
 RUN /opt/trilinos/do-configure
 RUN cd /opt/trilinos/trilinos-build && make -j4:
 
