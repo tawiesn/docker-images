@@ -7,13 +7,13 @@
 # (compilers, MPI, ...)
 #
 FROM tawiesn/dev-tpl
-ARG username=tutorial
+#ARG username=tutorial
 
 #########################
 
 # Install LXDE, VNC server
 #RUN yum -y update && \
-    yum -y install htop xterm nano openbox tightvnc-server \
+RUN yum -y install htop xterm nano openbox tightvnc-server \
 	doxygen gnuplot gedit xfce4-terminal && \
     yum clean all;
 
@@ -32,7 +32,7 @@ ARG username=tutorial
 
 # copy files to image
 #COPY download_trilinos.sh /opt/trilinos/
-COPY install_trilinos.sh /opt/trilinos/
+#COPY install_trilinos.sh /opt/trilinos/
 COPY do-configure /opt/trilinos/
 
 # copy or download trilinos source files
@@ -107,6 +107,8 @@ WORKDIR /opt/trilinos
 
 RUN /opt/trilinos/do-configure
 RUN cd /opt/trilinos/trilinos-build && make -j 4 
+RUN ln -s /opt/trilinos/trilinos-build/packages/muelu/doc/Tutorial/src /opt/muelu-tutorial
 
 ########################
+
 
