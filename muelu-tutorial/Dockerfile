@@ -106,7 +106,7 @@ env MPI_HOME /usr/lib64/openmpi
 WORKDIR /opt/trilinos
 
 RUN /opt/trilinos/do-configure
-RUN cd /opt/trilinos/trilinos-build && make 
+RUN cd /opt/trilinos/trilinos-build && make -j 4 
 
 ########################
 
