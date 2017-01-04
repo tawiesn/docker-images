@@ -12,7 +12,7 @@ ARG username=tutorial
 #########################
 
 # Install LXDE, VNC server
-RUN yum -y update && \
+#RUN yum -y update && \
     yum -y install htop xterm nano openbox tightvnc-server \
 	doxygen gnuplot gedit xfce4-terminal && \
     yum clean all;
