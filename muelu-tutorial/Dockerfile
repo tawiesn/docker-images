@@ -51,8 +51,24 @@ RUN rm -f /opt/trilinos/trilinos.tar.gz
 RUN mv /opt/trilinos/trilinos-12.8.1-Source /opt/trilinos/trilinos
 RUN mkdir /opt/trilinos/trilinos-build
 
-#This package built modules. This is kind of weird, but for now let's go with it.
-RUN module load mpi 
+#This package built modules. This is not ideal, but for now let's go with it.
+#RUN module load mpi 
+env PATH /usr/lib64/openmpi/bin:$PATH
+env LD_LIBRARY_PATH /usr/lib64/openmpi/lib:$LD_LIBRARY_PATH
+env PYTHONPATH /usr/lib64/python2.7/site-packages/openmpi:$PYTHONPATH
+env MANPATH /usr/share/man/openmpi-x86_64:$MANPATH
+env MPI_BIN /usr/lib64/openmpi/bin
+env MPI_SYSCONFIG /etc/openmpi-x86_64
+env MPI_FORTRAN_MOD_DIR /usr/lib64/gfortran/modules/openmpi-x86_64
+env MPI_INCLUDE /usr/include/openmpi-x86_64
+env MPI_LIB /usr/lib64/openmpi/lib
+env MPI_MAN /usr/share/man/openmpi-x86_64
+env MPI_PYTHON_SITEARCH /usr/lib64/python2.7/site-packages/openmpi
+env MPI_COMPILER openmpi-x86_64
+env MPI_SUFFIC _opemmpi
+env MPI_HOME /usr/lib64/openmpi
+
+
 
 #######################
 
