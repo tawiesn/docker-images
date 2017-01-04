@@ -51,6 +51,8 @@ RUN rm -f /opt/trilinos/trilinos.tar.gz
 RUN mv /opt/trilinos/trilinos-12.8.1-Source /opt/trilinos/trilinos
 RUN mkdir /opt/trilinos/trilinos-build
 
+#This package built modules. This is kind of weird, but for now let's go with it.
+RUN module load mpi 
 
 #######################
 
