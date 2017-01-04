@@ -14,8 +14,8 @@ FROM tawiesn/dev-tpl
 # Install LXDE, VNC server
 #RUN yum -y update && \
 RUN yum -y install htop xterm nano openbox tightvnc-server \
-	doxygen gnuplot gedit xfce4-terminal && \
-    yum clean all;
+	doxygen gnuplot gedit xfce4-terminal
+RUN yum clean all;
 
 #########################    
     
