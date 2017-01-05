@@ -30,6 +30,9 @@ FROM tawiesn/dev-tpl
 #RUN adduser $username
 #WORKDIR /home/$username
 
+#We're building in /opt now
+WORKDIR /opt/trilinos
+
 # copy files to image
 #COPY download_trilinos.sh /opt/trilinos/
 #COPY install_trilinos.sh /opt/trilinos/
@@ -103,7 +106,7 @@ env MPI_HOME /usr/lib64/openmpi
 # must be run as user!
 #RUN /opt/trilinos/install_trilinos.sh
 
-WORKDIR /opt/trilinos
+
 
 RUN /opt/trilinos/do-configure
 RUN cd /opt/trilinos/trilinos-build && make -j 4 

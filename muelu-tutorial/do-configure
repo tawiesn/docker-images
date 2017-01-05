@@ -2,9 +2,9 @@
 
 CONFIG_NAME=$(basename $0 .sh)
 
-TRILINOS_HOME=`pwd`/trilinos
-BUILD_DIR=`pwd`/trilinos-build/
-INSTALL_DIR=`pwd`/trilinos-install/
+TRILINOS_HOME=/opt/trilinos/trilinos
+BUILD_DIR=/opt/trilinos/trilinos-build/
+INSTALL_DIR=/opt/trilinos/trilinos-install/
 
 SUPERLU_DIR=/opt/tpls/SuperLU_4.3
 PARMETISDIR=/opt/tpls/parmetis-4.0.3/build
@@ -92,7 +92,7 @@ cmake \
 -D Trilinos_ENABLE_EXPLICIT_INSTANTIATION=ON \
 -D Teuchos_ENABLE_COMPLEX=OFF \
 -D Teuchos_ENABLE_LONG_LONG_INT=OFF \
--D Tpetra_INST_INT_INT=ON \
+-D Tpetra_INST_INT_INT=O \
 -D Tpetra_INST_INT_UNSIGNED=OFF \
 -D Tpetra_INST_INT_LONG=OFF \
 -D Tpetra_INST_INT_LONG_LONG=OFF \
