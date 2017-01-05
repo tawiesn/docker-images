@@ -7,10 +7,10 @@
 # (compilers, MPI, ...)
 #
 FROM tawiesn/dev-tpl
-#ARG username=tutorial
 
 #########################
 
+#Disabling as we don't need VNC for this
 # Install LXDE, VNC server
 #RUN yum -y update && \
 #RUN yum -y install htop xterm nano openbox tightvnc-server \
@@ -26,27 +26,16 @@ FROM tawiesn/dev-tpl
 #    yum -y install xfce4-terminal; \
 #    yum clean all;
 
-# create user (but run the commands as root)
-#RUN adduser $username
-#WORKDIR /home/$username
 
 #We're building in /opt now
 WORKDIR /opt/trilinos
 
 # copy files to image
-#COPY download_trilinos.sh /opt/trilinos/
-#COPY install_trilinos.sh /opt/trilinos/
 COPY do-configure /opt/trilinos/
 
 # copy or download trilinos source files
 
 RUN wget -nv https://trilinos.org/oldsite/download/files/trilinos-12.8.1-Source.tar.gz -O /opt/trilinos/trilinos.tar.gz
-
-#WORKDIR /home/$username
-#RUN chmod 750 /opt/trilinos/download_trilinos.sh
-#RUN /opt/trilinos/download_trilinos.sh
-#COPY trilinos-12.8.1-Source.tar.gz /home/$username
-#RUN mv /opt/trilinos/trilinos-12.8.1-Source.tar.gz /opt/trilinos/trilinos.tar.gz
 
 ##extract trilinos source file
 RUN tar xf /opt/trilinos/trilinos.tar.gz -C /opt/trilinos/
@@ -54,7 +43,7 @@ RUN rm -f /opt/trilinos/trilinos.tar.gz
 RUN mv /opt/trilinos/trilinos-12.8.1-Source /opt/trilinos/trilinos
 RUN mkdir /opt/trilinos/trilinos-build
 
-#This package built modules. This is not ideal, but for now let's go with it.
+#This could be done in modules, but lets be explicit 
 #RUN module load mpi 
 env PATH /usr/lib64/openmpi/bin:$PATH
 env LD_LIBRARY_PATH /usr/lib64/openmpi/lib:$LD_LIBRARY_PATH
@@ -72,7 +61,7 @@ env MPI_SUFFIC _opemmpi
 env MPI_HOME /usr/lib64/openmpi
 
 
-
+# User specifics have been depricated
 #######################
 
 # Set user for VNC server (USER is only for build)
@@ -103,14 +92,14 @@ env MPI_HOME /usr/lib64/openmpi
 
 ########################
 ## compile trilinos
-# must be run as user!
-#RUN /opt/trilinos/install_trilinos.sh
-
-
 
 RUN /opt/trilinos/do-configure
 RUN cd /opt/trilinos/trilinos-build && make -j 4 
+
+#Link in a tutorial directory, and then set the workdir
 RUN ln -s /opt/trilinos/trilinos-build/packages/muelu/doc/Tutorial/src /opt/muelu-tutorial
+WORKDIR /opt/muelu-tutorial
+
 
 ########################
 
