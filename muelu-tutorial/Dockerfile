@@ -1,31 +1,15 @@
 # build docker container using
-#   docker build --build-arg username=tutorial -t tawiesn/muelu-tutorial .
+#   docker build -t ajyounge/muelu-tutorial .
 # run the container using
-#   docker run -i -t tawiesn/muelu-tutorial /bin/bash
-#   docker run -dP -p 5901:5901 tawiesn/muelu-tutorial
+#   docker run -i -t ajyounge/muelu-tutorial /bin/bash
 # This image contains a basic CentOS with a standard development environment
 # (compilers, MPI, ...)
+# The VNC service has been removed, but can be added upon request.
 #
 FROM tawiesn/dev-tpl
 
-#########################
-
-#Disabling as we don't need VNC for this
-# Install LXDE, VNC server
-#RUN yum -y update && \
-#RUN yum -y install htop xterm nano openbox tightvnc-server \
-#	doxygen gnuplot gedit xfce4-terminal
-#RUN yum clean all;
 
 #########################    
-    
-#RUN yum update; \
-#    yum -y install doxygen; \
-#    yum -y install gnuplot; \
-#    yum -y install gedit; \
-#    yum -y install xfce4-terminal; \
-#    yum clean all;
-
 
 #We're building in /opt now
 WORKDIR /opt/trilinos
@@ -33,8 +17,7 @@ WORKDIR /opt/trilinos
 # copy files to image
 COPY do-configure /opt/trilinos/
 
-# copy or download trilinos source files
-
+# download trilinos source tarball
 RUN wget -nv https://trilinos.org/oldsite/download/files/trilinos-12.8.1-Source.tar.gz -O /opt/trilinos/trilinos.tar.gz
 
 ##extract trilinos source file
@@ -61,43 +44,16 @@ env MPI_SUFFIC _opemmpi
 env MPI_HOME /usr/lib64/openmpi
 
 
-# User specifics have been depricated
-#######################
-
-# Set user for VNC server (USER is only for build)
-#ENV USER $username
-
-# Copy xstartup file
-#COPY Xclients /home/$username/.Xclients 
-#COPY password.txt /home/$username
-#RUN chown -R $username: /home/$username
-
-# Copy VNC script that handles restarts
-#COPY vnc.sh /opt/
-#RUN chown $username: /opt/vnc.sh
-
-# Expose VNC port
-#EXPOSE 5901
-
 ########################
-# switch to user
-########################
-#USER $username
 
-# Set default password
-#RUN cat password.txt password.txt | vncpasswd && \
-#  rm password.txt
-
-#CMD ["/opt/vnc.sh"]
-
-########################
 ## compile trilinos
-
 RUN /opt/trilinos/do-configure
-RUN cd /opt/trilinos/trilinos-build && make -j 4 
+RUN cd /opt/trilinos/trilinos-build && make -j 3 
 
 #Link in a tutorial directory, and then set the workdir
 RUN ln -s /opt/trilinos/trilinos-build/packages/muelu/doc/Tutorial/src /opt/muelu-tutorial
+
+#Set the workdir to the tutorial
 WORKDIR /opt/muelu-tutorial
 
 
