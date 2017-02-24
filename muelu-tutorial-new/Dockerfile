@@ -65,4 +65,6 @@ RUN cat password.txt password.txt | vncpasswd && \
 CMD ["/opt/vnc.sh"]
 
 
+#Link to the Trilinos directory
+RUN ln -s /opt/trilinos/trilinos-build/packages/muelu/doc/Tutorial/src /home/$username/muelu-tutorial
 
