@@ -57,7 +57,7 @@ RUN /opt/trilinos/do-configure
 RUN cd /opt/trilinos/trilinos-build && make -j 3 
 
 #Link in a tutorial directory, and then set the workdir
-RUN ln -s /opt/trilinos/trilinos-build/packages/muelu/doc/Tutorial/src /opt/muelu-tutorial
+#RUN ln -s /opt/trilinos/trilinos-build/packages/muelu/doc/Tutorial/src /opt/muelu-tutorial
 
 #Set the workdir to the tutorial
 WORKDIR /opt/muelu-tutorial
