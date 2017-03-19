@@ -22,9 +22,6 @@ COPY do-configure-tutorial /opt/trilinos/
 
 # note: we expect the Trilinos sources being extracted to /opt/trilinos
 
-# create build directory
-RUN mkdir /opt/trilinos/trilinos-build
-
 #This could be done in modules, but lets be explicit 
 #RUN module load mpi 
 env PATH /usr/lib64/openmpi/bin:$PATH
@@ -45,7 +42,11 @@ env MPI_HOME /usr/lib64/openmpi
 
 ########################
 
+## clean up default trilinos installation
+RUN rm -Rf /opt/trilinos/trilinos-install
+
 ## compile trilinos
+RUN mkdir /opt/trilinos/trilinos-build
 RUN /opt/trilinos/do-configure-tutorial
 RUN cd /opt/trilinos/trilinos-build && make -j 3 
 
@@ -60,12 +61,6 @@ RUN yum update; \
 
 #########################    
     
-RUN yum update; \
-    yum -y install doxygen; \
-    yum -y install gnuplot; \
-    yum -y install gedit; \
-    yum -y install xfce4-terminal; \
-    yum clean all;
 
 # create user (but run the commands as root)
 RUN adduser $username
@@ -107,4 +102,3 @@ CMD ["/opt/vnc.sh"]
 
 #Link to the Trilinos directory
 RUN ln -s /opt/trilinos/trilinos-build/packages/muelu/doc/Tutorial/src /home/$username/muelu-tutorial
-
