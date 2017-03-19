@@ -1,19 +1,22 @@
 # build docker container using
-#   docker build -t ajyounge/muelu-tutorial .
+#   docker build -t tawiesn/trilinos-base .
+# Add
+#   --build-arg TRILINOS_VERSION=12.8.1
+#   --build-arg CONFIGFILE=do-configure-release.sh
+# to choose a specific Trilinos version or configuration file
 # run the container using
-#   docker run -i -t ajyounge/muelu-tutorial /bin/bash
+#   docker run -i -t tawiesn/trilinos-base /bin/bash
 # This image contains a basic CentOS with a standard development environment
 # (compilers, MPI, ...)
-# The VNC service has been removed, but can be added upon request.
 #
 
 #Build from the TPL image
 FROM tawiesn/dev-tpl
 
-
 #Take in build arguments
 ARG TRILINOS_VERSION=12.8.1
 
+ARG CONFIGFILE=do-configure-release.sh
 
 #########################    
 
@@ -21,7 +24,7 @@ ARG TRILINOS_VERSION=12.8.1
 WORKDIR /opt/trilinos
 
 # copy files to image
-COPY do-configure /opt/trilinos/
+COPY $CONFIGFILE /opt/trilinos/do-configure
 
 # download trilinos source tarball
 RUN wget -nv https://trilinos.org/oldsite/download/files/trilinos-$TRILINOS_VERSION-Source.tar.gz -O /opt/trilinos/trilinos.tar.gz
@@ -54,14 +57,11 @@ env MPI_HOME /usr/lib64/openmpi
 
 ## compile trilinos
 RUN /opt/trilinos/do-configure
-RUN cd /opt/trilinos/trilinos-build && make -j 3 
+RUN cd /opt/trilinos/trilinos-build && make -j 3 && make install
+RUN rm -Rf /opt/trilinos/trilinos-build
 
-#Link in a tutorial directory, and then set the workdir
-#RUN ln -s /opt/trilinos/trilinos-build/packages/muelu/doc/Tutorial/src /opt/muelu-tutorial
-
-#Set the workdir to the tutorial
-WORKDIR /opt/muelu-tutorial
-
+# Set workdir to trilinos installation dir
+WORKDIR /opt/trilinos/trilinos-install/
 
 ########################
 
